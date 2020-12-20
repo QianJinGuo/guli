@@ -13,6 +13,8 @@
  */
 package tech.jinguo.eduservice.config;
 
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +29,7 @@ import org.springframework.context.annotation.Profile;
  * @date 2020-12-19 01:44:54
  */
 @Configuration
-@MapperScan("tech.jinguo.eduservice.mapper")
+@MapperScan({"tech.jinguo.eduservice.mapper"})
 //配置建议加载配置类上，比加在启动类上规范
 public class EduConfig {
     /**
@@ -41,5 +43,10 @@ public class EduConfig {
         performanceInterceptor.setMaxTime(1000);//ms，超过此处设置的ms则sql不执行
         performanceInterceptor.setFormat(true);
         return performanceInterceptor;
+    }
+
+    @Bean
+    public ISqlInjector iSqlInjector() {
+        return new LogicSqlInjector();
     }
 }

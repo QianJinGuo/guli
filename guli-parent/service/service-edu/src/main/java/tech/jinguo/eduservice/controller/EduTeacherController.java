@@ -2,10 +2,8 @@ package tech.jinguo.eduservice.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import tech.jinguo.eduservice.entity.EduTeacher;
 import tech.jinguo.eduservice.service.EduTeacherService;
 
@@ -32,8 +30,12 @@ public class EduTeacherController {
     //rest风格  Get Post Put Delete
     @GetMapping("findAll") // findAll和/findAll都可以
     public List<EduTeacher> findAllTeacher(){
-        List<EduTeacher> list = teacherService.list(null);
-        return list;
+        return teacherService.list(null);
+    }
+
+    @DeleteMapping("{id}")
+    public boolean removeById(@PathVariable String id){
+       return teacherService.removeById(id);
     }
 }
 
