@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import tech.jinguo.commonutils.Result;
 import tech.jinguo.eduservice.entity.EduTeacher;
 import tech.jinguo.eduservice.service.EduTeacherService;

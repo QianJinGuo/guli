@@ -14,7 +14,6 @@
 package tech.jinguo.commonutils;
 
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 import java.util.HashMap;

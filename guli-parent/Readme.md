@@ -33,3 +33,55 @@ Consider the following:
 ## 2. Error:java: Annotation processing is not supported for module cycles. Please ensure that all modules from cycle [A,B] are excluded from annotation processing
     解决办法:查看maven多个模块的依赖，如modules 是否配置正确的子模块
     这个报错和上个报错连着出现
+    
+## 3.Error:(49, 12) java: 找不到符号
+       符号:   类 Result
+       位置: 类 tech.jinguo.eduservice.controller.EduTeacherController
+1.查看maven配置文件，比如build时提示提示maven配置文件中profile配置有问题       
+2.查看idea的Maven中的Runner有没有勾选->File-Settings-Build-Runner-Delegate IDE build/run actions to Maven，不勾选则没有链接到Maven,会出现包不存在的问题   
+ 
+### 4.Could not find artifact tech.jinguo:common-utils:pom:0.0.1-SNAPSHOT 承接上个问题 
+     依赖的模块没有打包
+###  Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:2.4.1:repackage (repackage) on project service-base: Execution repackage of goal org.springframework.boot:spring-boot-maven-plugin:2.4.1:repackage failed: Unable to find main class
+解决办法：
+ <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+ </build>
+ 这个插件不需要放在pom父项目中，放在需要运行的模块中
+ 如jar   service-base, common-base, service-edu
+ 不需要放在pom  guli, service, common模块下
+ 
+ 如果执行mvn clean package时Unable to find main class
+ 那么就配置成：
+  <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-maven-plugin</artifactId>
+                 <!--没有主类的时候配置-->
+                 <configuration>
+                     <skip>true</skip>
+                 </configuration>
+             </plugin>
+         </plugins>
+  </build>
+  
+   如果还是提示Could not find artifact
+   说明没有把依赖的模块打包并部署到本地maven仓库
+   
+   
+   mvn clean package依次执行了clean、resources、compile、testResources、testCompile、test、jar(打包)等７个阶段。
+   mvn clean install依次执行了clean、resources、compile、testResources、testCompile、test、jar(打包)、install等8个阶段。
+   mvn clean deploy依次执行了clean、resources、compile、testResources、testCompile、test、jar(打包)、install、deploy等９个阶段
+   
+   
+   package命令完成了项目编译、单元测试、打包功能，但没有把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库
+   install命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库，但没有布署到远程maven私服仓库
+   deploy命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库
+  
+  
