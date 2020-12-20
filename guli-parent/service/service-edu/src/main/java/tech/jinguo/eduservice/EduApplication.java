@@ -15,6 +15,7 @@ package tech.jinguo.eduservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author jinguo
@@ -24,8 +25,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2020-12-19 01:40:38
  */
 @SpringBootApplication
+@ComponentScan(basePackages = {"tech.jinguo"})
+
 public class EduApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EduApplication.class,args);
+        SpringApplication.run(EduApplication.class, args);
     }
 }

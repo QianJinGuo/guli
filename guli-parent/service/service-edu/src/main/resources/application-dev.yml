@@ -5,7 +5,6 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-
   datasource:  # mysql数据源配置
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 推荐使用serverTimezone=Asia/Shanghai 也可用serverTimezome=GMT%2B8，但可能会无法识别
@@ -32,3 +31,4 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
+#debug: true
