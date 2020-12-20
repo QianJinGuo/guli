@@ -84,4 +84,22 @@ Consider the following:
    install命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库，但没有布署到远程maven私服仓库
    deploy命令完成了项目编译、单元测试、打包功能，同时把打好的可执行jar包（war包或其它形式的包）布署到本地maven仓库和远程maven私服仓库
   
-  
+## 5.在使用mybatis-plus 3.0.5的removeById方法时:
+      boolean flag = teacherService.removeById(id);
+      
+      removeById的底层是delBool
+      public static boolean delBool(Integer result) {
+          return null != result && result >= 0;
+      }
+     所以问题在于result=0的时候 返回的是true
+
+     上述remove方法一直返回true的问题，在最新版本3.3.0已经修复，
+     SqlHelper中已经移除delBool方法，save update remove全部都使用retBool方法判断逻辑。
+     default boolean removeById(Serializable id) {
+           return SqlHelper.retBool(this.getBaseMapper().deleteById(id));
+           =>实际上判断的是return null != result && result >= 1;
+     }
+     在使用MP 的IService接口时，如果不熟悉或不太确定接口底层的实现逻辑是否与自己的预期一致，
+     建议是先看一下源码使用单元测试验证一下逻辑是否正常，此问题就是本人在swapper中，
+     故意输入错误值，查看返回错误结果时，永远返回的都是true
+      */
