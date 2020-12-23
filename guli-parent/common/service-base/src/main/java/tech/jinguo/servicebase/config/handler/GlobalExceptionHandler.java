@@ -13,11 +13,13 @@
  */
 package tech.jinguo.servicebase.config.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tech.jinguo.commonutils.GuliException;
 import tech.jinguo.commonutils.Result;
+import tech.jinguo.commonutils.util.ExceptionUtil;
 
 /**
  * @author jinguo
@@ -27,6 +29,7 @@ import tech.jinguo.commonutils.Result;
  * @date 2020-12-23 22:29:47
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     //指定出现什么异常执行此方法
     @ExceptionHandler(Exception.class)
@@ -45,12 +48,11 @@ public class GlobalExceptionHandler {
         return Result.error().message("执行了ArithmeticException异常处理");
     }
 
-    //特定异常
-    //程序先找特定异常，再找全局异常
+    //自定义异常
     @ExceptionHandler(GuliException.class)
     @ResponseBody //为了返回数据
     public Result error(GuliException e){
-        e.printStackTrace();
+        log.error(ExceptionUtil.getMessage(e));
         return Result.error().code(e.getCode()).message(e.getMsg());
     }
 }

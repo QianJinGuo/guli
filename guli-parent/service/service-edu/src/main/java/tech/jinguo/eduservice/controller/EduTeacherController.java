@@ -44,13 +44,13 @@ public class EduTeacherController {
     @GetMapping("/findAll") // findAll和/findAll都可以
     public List<EduTeacher> findAllTeacher() {
         //演示自定义异常
-        /*
+
         try{
             int i = 10/0;
         }catch (Exception e){
             throw new GuliException(20001,"出现自定义异常");
         }
-        */
+
         return teacherService.list(null);
     }
 

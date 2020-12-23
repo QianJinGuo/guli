@@ -38,7 +38,7 @@ public class EduConfig {
      * 开发环境使用，线上不推荐。 maxTime 指的是 sql 最大执行时长
      */
     @Bean
-    @Profile({"dev"})// 设置 dev环境开启
+    @Profile({"prod"})// 设置 dev环境开启
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         performanceInterceptor.setMaxTime(1000);//ms，超过此处设置的ms则sql不执行

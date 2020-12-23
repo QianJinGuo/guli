@@ -21,14 +21,22 @@ spring:
       pool-name: GuliHikariPool
     type: com.zaxxer.hikari.HikariDataSource
 
-# mybatis日志
+
 mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# mybatis日志
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:tech/jinguo/eduservice/*/mapper/*.xml
   global-config:
     db-config:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
+#设置debug=true，在控制台查看springboot自动配置的服务
 #debug: true
+
+# 设置日志级别,这种方式只能将日志打印在控制台上
+#logging:
+#  level:
+#    #级别  ALL->Debug->Info->Warn->Error->FATAL->OFF  级别由低到高，当前级别会打印当前及以上级别的信息
+#    root: INFO
