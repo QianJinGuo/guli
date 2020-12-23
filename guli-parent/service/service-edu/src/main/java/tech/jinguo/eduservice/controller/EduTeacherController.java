@@ -1,24 +1,16 @@
 package tech.jinguo.eduservice.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import tech.jinguo.commonutils.Result;
 import tech.jinguo.eduservice.entity.EduTeacher;
-import tech.jinguo.eduservice.entity.vo.TeacherQuery;
 import tech.jinguo.eduservice.service.EduTeacherService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -104,7 +96,7 @@ public class EduTeacherController {
         pageMap.put("rows", records);
         return Result.success().data(pageMap);
     }
-    
+
     /**
      * @method: pageTeacherCondition
      * @params: [current, limit, teacherQuery]
@@ -129,7 +121,19 @@ public class EduTeacherController {
         Page<EduTeacher> pageTeacher = new Page<>(current,limit);
         //构建条件
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
+    @ApiOperation(value = "新增讲师")
+    @PostMapping("/addTeacher")
+    public Result save(@ApiParam(name = "teacher", value = "讲师对象", required = true) @RequestBody EduTeacher teacher) {
+        teacherService.save(teacher);
+        return Result.error();
+    }
 
+    @ApiOperation(value = "根据ID查询讲师")
+    @GetMapping("/query/{id}")
+    public Result getById(@ApiParam(name = "id", value = "讲师ID", required = true) @PathVariable String id) {
+        EduTeacher teacher = teacherService.getById(id);
+        return Result.success().data("item", teacher);
+    }
         //多条件组合查询，动态sql，mybatis中<where>
         //判断条件值是否为空，如果不为空则拼接条件
         String name = teacherQuery.getName();
@@ -137,6 +141,17 @@ public class EduTeacherController {
         String begin = teacherQuery.getBegin();
         String end = teacherQuery.getEnd();
 
+    @ApiOperation(value = "根据ID修改讲师")
+    @PutMapping("/update/{id}")
+    public Result updateById(
+            @ApiParam(name = "id", value = "讲师ID", required = true)
+            @PathVariable String id,
+            @ApiParam(name = "eduTeacher", value = "讲师对象", required = true)
+            @RequestBody EduTeacher teacher) {
+        teacher.setId(id);
+        teacherService.updateById(teacher);
+        return Result.success();
+    }
         //判断条件是否为空，如果不为空则拼接条件
         //重点！！！加的不是类中的属性名，而是表中的字段
         if(!StringUtils.isEmpty(name)){
