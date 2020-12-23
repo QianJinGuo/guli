@@ -11,7 +11,7 @@
  * @date 2020-12-20 13:46:53
  *
  */
-package tech.jinguo.eduservice.handler;
+package tech.jinguo.servicebase.config.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

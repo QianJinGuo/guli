@@ -48,7 +48,7 @@ public class EduTeacherController {
     @GetMapping("/commonFindAll") // findAll和/findAll都可以
     public Result commonFindAllTeacher() {
         List<EduTeacher> list = teacherService.list(null);
-        return Result.success().data("items",list);
+        return Result.success().data("items", list);
     }
 
     @ApiOperation("以统一结果来返回根据id删除讲师的影响记录")
@@ -75,15 +75,38 @@ public class EduTeacherController {
            建议是先看一下源码使用单元测试验证一下逻辑是否正常，此问题就是本人在swapper中，
            故意输入错误值，查看返回错误结果时，永远返回的都是true
          */
-        if(flag){
+        if (flag) {
             return Result.success();
-        }else {
+        } else {
             return Result.error();
         }
     }
 
+    @ApiOperation(value = "新增讲师")
+    @PostMapping("/addTeacher")
+    public Result save(@ApiParam(name = "teacher", value = "讲师对象", required = true) @RequestBody EduTeacher teacher) {
+        teacherService.save(teacher);
+        return Result.error();
+    }
 
+    @ApiOperation(value = "根据ID查询讲师")
+    @GetMapping("/query/{id}")
+    public Result getById(@ApiParam(name = "id", value = "讲师ID", required = true) @PathVariable String id) {
+        EduTeacher teacher = teacherService.getById(id);
+        return Result.success().data("item", teacher);
+    }
 
+    @ApiOperation(value = "根据ID修改讲师")
+    @PutMapping("/update/{id}")
+    public Result updateById(
+            @ApiParam(name = "id", value = "讲师ID", required = true)
+            @PathVariable String id,
+            @ApiParam(name = "eduTeacher", value = "讲师对象", required = true)
+            @RequestBody EduTeacher teacher) {
+        teacher.setId(id);
+        teacherService.updateById(teacher);
+        return Result.success();
+    }
 
 }
 
