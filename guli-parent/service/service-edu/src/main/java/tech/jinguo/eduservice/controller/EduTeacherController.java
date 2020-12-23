@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import tech.jinguo.commonutils.GuliException;
 import tech.jinguo.commonutils.Result;
 import tech.jinguo.eduservice.entity.EduTeacher;
 import tech.jinguo.eduservice.entity.vo.TeacherQuery;
@@ -42,6 +43,14 @@ public class EduTeacherController {
     @ApiOperation(value = "所有讲师列表")
     @GetMapping("/findAll") // findAll和/findAll都可以
     public List<EduTeacher> findAllTeacher() {
+        //演示自定义异常
+        /*
+        try{
+            int i = 10/0;
+        }catch (Exception e){
+            throw new GuliException(20001,"出现自定义异常");
+        }
+        */
         return teacherService.list(null);
     }
 
