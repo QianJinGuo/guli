@@ -11,6 +11,13 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>service-base</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>tech.jinguo</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

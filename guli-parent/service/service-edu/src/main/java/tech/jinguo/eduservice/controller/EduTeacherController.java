@@ -1,16 +1,23 @@
 package tech.jinguo.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import tech.jinguo.commonutils.Result;
 import tech.jinguo.eduservice.entity.EduTeacher;
+import tech.jinguo.eduservice.entity.vo.TeacherQuery;
 import tech.jinguo.eduservice.service.EduTeacherService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -102,14 +109,14 @@ public class EduTeacherController {
      * @params: [current, limit, teacherQuery]
      * @returnType: tech.jinguo.commonutils.Result
      * @description: TeacherQuery 如果传入参数和实体类匹配，通过@RequestBody则会将参数自动封装，@ResponseBody会自动将结果分装为字符串或json格式字符串
-     *              RequestBody:
-     *              使用Json传递数据，把Json数据封装到对应对象里面
-     *              用RequestBody需要使用Post
-     *              RequestBody(required = false) TeacherQuery teacherQuery
-     *              表明teacherQuery可以为null
-     *
-     *              ResponseBody:
-     *              返回数据，一般返回json数据
+     * RequestBody:
+     * 使用Json传递数据，把Json数据封装到对应对象里面
+     * 用RequestBody需要使用Post
+     * RequestBody(required = false) TeacherQuery teacherQuery
+     * 表明teacherQuery可以为null
+     * <p>
+     * ResponseBody:
+     * 返回数据，一般返回json数据
      * @author: jinguo
      * @date: 2020/12/22 23:38
      */
@@ -118,9 +125,46 @@ public class EduTeacherController {
     public Result pageTeacherCondition(@ApiParam(name = "current", value = "当前页码", required = true) @PathVariable long current,
                                        @ApiParam(name = "limit", value = "每页记录数", required = true) @PathVariable long limit, @RequestBody(required = false) TeacherQuery teacherQuery) {
         //创建page对象
-        Page<EduTeacher> pageTeacher = new Page<>(current,limit);
+        Page<EduTeacher> pageTeacher = new Page<>(current, limit);
         //构建条件
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
+
+        //多条件组合查询，动态sql，mybatis中<where>
+        //判断条件值是否为空，如果不为空则拼接条件
+        String name = teacherQuery.getName();
+        Integer level = teacherQuery.getLevel();
+        String begin = teacherQuery.getBegin();
+        String end = teacherQuery.getEnd();
+        //重点！！！加的不是类中的属性名，而是表中的字段
+        if (!StringUtils.isEmpty(name)) {
+            //构建条件
+            wrapper.like("name", name);
+        }
+        if (!StringUtils.isEmpty(level)) {
+            //构建条件
+            wrapper.eq("level", level);
+        }
+        if (!StringUtils.isEmpty(begin)) {
+            //构建条件
+            wrapper.ge("begin", begin);
+        }
+        if (!StringUtils.isEmpty(end)) {
+            //构建条件
+            wrapper.le("end", end);
+        }
+
+        LambdaQueryWrapper<EduTeacher> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(!StringUtils.isEmpty(name), EduTeacher::getName, teacherQuery.getName());
+
+        //调用方法实现条件查询分页
+        teacherService.page(pageTeacher, wrapper);
+        List<EduTeacher> records = pageTeacher.getRecords();//数据list集合
+        long total = pageTeacher.getTotal();//总记录数
+        return Result.success().data("total", total).data("rows", records);
+
+
+    }
+
     @ApiOperation(value = "新增讲师")
     @PostMapping("/addTeacher")
     public Result save(@ApiParam(name = "teacher", value = "讲师对象", required = true) @RequestBody EduTeacher teacher) {
@@ -134,12 +178,7 @@ public class EduTeacherController {
         EduTeacher teacher = teacherService.getById(id);
         return Result.success().data("item", teacher);
     }
-        //多条件组合查询，动态sql，mybatis中<where>
-        //判断条件值是否为空，如果不为空则拼接条件
-        String name = teacherQuery.getName();
-        Integer level = teacherQuery.getLevel();
-        String begin = teacherQuery.getBegin();
-        String end = teacherQuery.getEnd();
+
 
     @ApiOperation(value = "根据ID修改讲师")
     @PutMapping("/update/{id}")
@@ -152,33 +191,7 @@ public class EduTeacherController {
         teacherService.updateById(teacher);
         return Result.success();
     }
-        //判断条件是否为空，如果不为空则拼接条件
-        //重点！！！加的不是类中的属性名，而是表中的字段
-        if(!StringUtils.isEmpty(name)){
-            //构建条件
-            wrapper.like("name",name);
-        }
-        if(!StringUtils.isEmpty(level)){
-            //构建条件
-            wrapper.eq("level",level);
-        }
-        if(!StringUtils.isEmpty(begin)){
-            //构建条件
-            wrapper.ge("begin",begin);
-        }
-        if(!StringUtils.isEmpty(end)){
-            //构建条件
-            wrapper.le("end",end);
-        }
 
-        LambdaQueryWrapper<EduTeacher> lambdaQueryWrapper=new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(!StringUtils.isEmpty(name),EduTeacher::getName,teacherQuery.getName());
 
-        //调用方法实现条件查询分页
-        teacherService.page(pageTeacher,wrapper);
-        List<EduTeacher> records = pageTeacher.getRecords();//数据list集合
-        long total = pageTeacher.getTotal();//总记录数
-        return Result.success().data("total",total).data("rows",records);
-    }
 }
 

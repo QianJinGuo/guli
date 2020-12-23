@@ -107,11 +107,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>tech.jinguo</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--依赖传递 service-base依赖了common-utils，因此在这里引用service-base就会将common-utils传递进来-->
+        <!--这里不需要再引入common-utils，否则就会造成依赖传递，可以通过exclude或者optional来控制-->
         <dependency>
             <groupId>tech.jinguo</groupId>
             <artifactId>service-base</artifactId>
