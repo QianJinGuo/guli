@@ -4,14 +4,14 @@
  * 不得擅自将其用于商业或其他环境，否则将会承担相应的法律责任。
  *
  * @projectName guli-parent
- * @packageName tech.jinguo.eduservice.handler
+ * @packageName tech.jinguo.servicebase.config.handler
  * @fileName MyMetaObjectHandler
  * @author jinguo
  * @email felix@jinguo.tech
  * @date 2020-12-20 13:46:53
  *
  */
-package tech.jinguo.eduservice.handler;
+package tech.jinguo.servicebase.config.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
