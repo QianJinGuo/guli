@@ -23,9 +23,11 @@ spring:
 
 
 mybatis-plus:
-# mybatis日志
+  #mybatis日志
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  configuration:
+    log-prefix:
   mapper-locations: classpath:tech/jinguo/eduservice/*/mapper/*.xml
   global-config:
     db-config:
