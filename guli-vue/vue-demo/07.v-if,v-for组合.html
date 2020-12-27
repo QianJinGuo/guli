@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <table border="1">
+            <tr v-for="(user,index) in userList">
+                <td>{{index}}</td>
+                <td>{{user.age}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.area}}</td>
+            </tr>
+            <tr v-for="(item,index) in userList">
+                <td>{{index}}</td>
+                <td>{{item.name}}</td>
+                <td v-if="item.age>23">大于23</td>
+                <td v-else>小于23</td>
+                <td>{{item.area}}</td>
+            </tr>         
+        </table>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                userList: [
+                    {name: 'zhangsan', age: 22, area: 'sz'},
+                    {name: 'lisi', age: 23, area: 'sh'},
+                    {name: 'wangwu', age: 24, area: 'nj'},
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html> 

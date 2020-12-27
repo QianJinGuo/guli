@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!--v-bind指令
+            单向数据绑定
+            这个指令一般用在标签属性里面，获取值
+        -->
+        <h1 v-bind:title="message">{{content}}</h1>
+        <!--简写形式-->
+        <h1 :title="message">{{content}}</h1>
+
+        <!-- v-bind:value只能进行单向的数据渲染 
+             单向：我自己变，其他地方和我没关系
+             一般用于属性值
+        -->
+        <input type="text" :value="searchMap.keyword"/>
+        <!-- v-model:可以进行双向的数据绑定 
+            双向：我变，其他地方都要变
+            一般用于表单提交
+        -->
+        <input type="text" v-model="searchMap.keyword"/>
+        <p>{{searchMap.keyword}}</p>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                content: '我是标题',
+                message: '页面加载与'+new Date().toLocaleString(),
+                searchMap: {keyword:'vue'}
+            }
+        })
+    </script>
+</body>
+
+</html>

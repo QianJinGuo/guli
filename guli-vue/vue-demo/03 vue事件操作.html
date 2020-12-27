@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{searchMap.name}}
+        <button v-on:click="print(searchMap.age)">查询</button>
+        <button @click="search">查询2</button>
+        <p></a><a :href="result.url" target="_blank">{{result.title}}</a></p>
+    
+
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        getUser = name => "hello" + name
+        new Vue({
+            el: '#app',
+            data: {
+                searchMap: { name: getUser('zhangsan'), age: 18 },
+                result: {title: '',url: ''}
+            },
+            methods: {
+                print(name) {
+                    console.log('search'+name)
+                },
+                search(){
+                    console.log(`search
+                        for vue!
+                    `)
+                    this.result={
+                        title: 'zhangsan',
+                        url: 'https://jinguo.tech'
+                    }
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

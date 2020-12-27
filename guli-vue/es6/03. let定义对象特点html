@@ -1,0 +1,11 @@
+<script>
+    let user = { name: 'zhangsan', age: 18 }
+    console.log(user)
+
+    let name1 = user.name
+    let age1 = user.age
+    console.log(name1, age1)
+
+    let { name2, age2 } = user
+    console.log(name2, age2)
+</script>
