@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8"></meta>
+            <title>学习js</title>
+        </head>
+        <body>
+            <h1>这是我的第一个JS程序</h1>
+            <p>这是一个段落</p>
+            <button onclick="showTime()">显示日期</button>
+            <input type="text" id="timeText" value=""/>
+        </body>
+        <script>
+            function showTime(){
+                var date = new Date();
+                console.log(date);
+                document.getElementById("timeText").value = date;
+            }
+        </script>
+    </html>
+</html>
