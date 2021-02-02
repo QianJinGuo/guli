@@ -12,7 +12,8 @@
     <div id="app">
         <!--v-bind指令
             单向数据绑定
-            这个指令一般用在标签属性里面，获取值
+            这个指令一般用在标签属性里面，可以获取到data里的值
+            此时title中显示的是模型数据
         -->
         <h1 v-bind:title="message">{{content}}</h1>
         <!--简写形式-->
@@ -21,11 +22,16 @@
         <!-- v-bind:value只能进行单向的数据渲染 
              单向：我自己变，其他地方和我没关系
              一般用于属性值
+            我绑定你，你变了，我就变。
+            我变了，你不会变
         -->
         <input type="text" :value="searchMap.keyword"/>
         <!-- v-model:可以进行双向的数据绑定 
             双向：我变，其他地方都要变
             一般用于表单提交
+
+            我们互相绑定，你变了，我九遍。
+            我变了，你也要变。
         -->
         <input type="text" v-model="searchMap.keyword"/>
         <p>{{searchMap.keyword}}</p>
@@ -37,7 +43,7 @@
             data: {
                 content: '我是标题',
                 message: '页面加载与'+new Date().toLocaleString(),
-                searchMap: {keyword:'vue'}
+                searchMap: {keyword:'vue12345612'}
             }
         })
     </script>

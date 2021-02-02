@@ -19,15 +19,42 @@
             data: {
 
             },
+            beforeCreate(){
+                debugger
+                console.log("beforeCreate")
+            },
+            //重点
             created() {
                 debugger
+                //渲染指数据在页面中进行显示
                 //在渲染(数据显示在页面上)之前执行
                 console.log("created")
             },
+            beforeMount(){
+                debugger
+                console.log("beforeMount")
+            },
+            //重点
             mounted() {
                 debugger
                 //在渲染(数据显示在页面上)之后执行
                 console.log("mounted")
+            },
+            beforeUpdate(){
+                debugger
+                console.log("beforeUpdate")
+            },
+            updated(){
+                debugger
+                console.log("updated") 
+            },
+            beforeDestory(){
+                debugger
+                console.log("beforeDestory") 
+            },
+            destroyed(){
+                debugger
+                console.log("destroyed")  
             }
         })
     </script>

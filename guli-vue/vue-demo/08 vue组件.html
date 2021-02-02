@@ -10,13 +10,17 @@
 
 <body>
     <div id="app">
+        <!--组件可以拓展Html中的标签-->
         <Navbar></Navbar>
     </div>
     <script src="../vue.min.js"></script>
+
+    <!--引入全局组件-->
+    <script src="components/Navbar.js"></script> 
     <script>
         new Vue({
             el: '#app',
-            //定义vue使用的组件
+            //定义vue使用的组件，组件类似于java中的对象
             components: {
                 //组件的名字
                 'Navbar': {

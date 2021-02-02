@@ -11,21 +11,43 @@
 <body>
     <div id="app">
         <ul>
-            <li v-for="n in 10">{{n}}</li>
+            <li v-for="n in list1">{{n}}</li>
         </ul>
         <ol>
             <li v-for="(n,index) in 5">{{n}},{{index}}</li>
         </ol>
+        <ul>
+            <li v-for="n in userList">{{n.id}},{{n.username}},{{n.age}}</li>
+        </ul>
+        <ol>
+            <li v-for="(n,index) in statusEnum">{{n.value}},{{n.desc}},{{index}}</li>
+        </ol>
+        <table border="1">
+            <tr v-for="user in userList">
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.age}}</td>
+            </tr>
+        </table>
     </div>
     <script src="../vue.min.js"></script>
     <script>
         new Vue({
+            //如果给变量赋初始值时用了=，就会提示Uncaught SyntaxError: Invalid shorthand property initializer
             el: '#app',
             data: {
-
+                list1: [1, 3, 5, 7, 9],
+                userList: [{ id: 1, username: 'zhangsan', age: 18 }, { id: 2, username: 'lisi', age: 19 }, { id: 3, username: 'wangwu', age: 20 }],
+                //状态枚举
+                statusEnum: [
+                    { value: 0, desc: '待清洗' },
+                    { value: 1, desc: '清洗成功' },
+                    { value: 2, desc: '清洗失败' },
+                    { value: 3, desc: '清洗中' },
+                ]
             }
         })
     </script>
 </body>
 
-</html> 
+</html>
