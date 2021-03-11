@@ -31,6 +31,7 @@ import java.util.Map;
 @Api(description = "讲师管理")
 @RestController
 @RequestMapping(value = "/edu/teacher")
+@CrossOrigin(originPatterns = "*")
 public class EduTeacherController {
 
     //访问地址:
